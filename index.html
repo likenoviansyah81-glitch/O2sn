@@ -7,7 +7,8 @@
     <style>
         body {
             margin: 0;
-            background: #000b1a;
+            /* Background mewah dengan gradasi dan bintang */
+            background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
@@ -18,6 +19,16 @@
             height: 100vh;
         }
 
+        /* Efek partikel halus pada background */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
         #main-content {
             display: flex;
             flex-direction: column;
@@ -26,24 +37,33 @@
             z-index: 2;
         }
 
+        /* Logo di awal */
+        .initial-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        }
+
         #status-text {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 4px;
             text-align: center;
-            transition: all 0.3s;
+            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
         }
 
         .palm-container {
             position: relative;
             width: 260px;
             height: 360px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
+            border: 2px solid rgba(0, 255, 255, 0.4);
             border-radius: 45px;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
             overflow: hidden;
         }
 
@@ -51,25 +71,16 @@
             transform: scale(1.08);
             border-color: #00fbff;
             box-shadow: 0 0 60px rgba(0, 251, 255, 0.4);
-            background: rgba(0, 251, 255, 0.08);
         }
 
         .palm-icon {
-            width: 100%;
-            height: 100%;
-            fill: #00d4ff;
-            opacity: 0.3;
-            transition: opacity 0.3s;
+            width: 100%; height: 100%;
+            fill: #00d4ff; opacity: 0.3;
         }
-
-        .palm-container.active .palm-icon { opacity: 0.8; }
 
         .scanner-line {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
+            top: 0; left: 0; width: 100%; height: 10px;
             background: linear-gradient(to bottom, transparent, #00fbff);
             box-shadow: 0 0 25px #00fbff;
             display: none;
@@ -87,14 +98,23 @@
             background: radial-gradient(circle, #004466 0%, #000 100%);
             z-index: 10;
             text-align: center;
-            padding-top: 5%;
+            padding-top: 5vh;
             opacity: 0;
             transition: opacity 1s ease;
         }
 
         .success-overlay.show { display: block; opacity: 1; }
 
-        .confetti {
+        .featured-image {
+            width: 250px;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            border: 3px solid #ffd700;
+        }
+
+        .confetti-container {
             animation: slideUp 1.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -107,6 +127,8 @@
 <body>
 
     <div id="main-content">
+        <img src="https://drive.google.com/uc?export=view&id=ID_FILE_ANDA" alt="Logo" class="initial-logo">
+        
         <h2 id="status-text">TEKAN DAN TAHAN<br>PEMINDAI OTORITAS</h2>
         <div class="palm-container" id="palmTrigger">
             <svg class="palm-icon" viewBox="0 0 24 24"><path d="M12,2A1,1 0 0,1 13,3V11.29L15.71,14.29L17.12,12.88L13,8.76V5H15V8.26L19.5,12.76L18.09,14.17L15,11.08V21H9V11.08L5.91,14.17L4.5,12.76L9,8.26V2H11V3A1,1 0 0,1 12,2M11,13V21H13V13H11Z" /></svg>
@@ -117,11 +139,14 @@
     <div id="musicPlayer" style="display:none"></div>
 
     <div class="success-overlay" id="successScreen">
-        <div class="confetti">
+        <div class="confetti-container">
             <h3 style="color: #ffd700; letter-spacing: 3px;">DENGAN RAHMAT TUHAN YME</h3>
             <h1 style="font-size: 5rem; margin: 10px 0;">O2SN 2026</h1>
             <h2 style="color: #00fbff; font-size: 2.2rem;">LUBUKLINGGAU SELATAN I</h2>
-            <h1 style="color: #ffd700; font-size: 4rem; margin-top: 20px;">RESMI DIBUKA</h1>
+            
+            <img src="https://drive.google.com/uc?export=view&id=ID_FILE_ANDA" alt="Logo O2SN" class="featured-image">
+            
+            <h1 style="color: #ffd700; font-size: 4rem; margin-top: 10px;">RESMI DIBUKA</h1>
         </div>
     </div>
 
@@ -141,19 +166,15 @@
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
 
-        // Suara Scanning (Dengungan yang naik frekuensinya)
         function playScanAudio() {
             initAudio();
             scanOscillator = audioCtx.createOscillator();
             scanGain = audioCtx.createGain();
-            
             scanOscillator.type = 'sawtooth';
             scanOscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
             scanOscillator.frequency.exponentialRampToValueAtTime(500, audioCtx.currentTime + 2.5);
-            
             scanGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
             scanGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 2.5);
-            
             scanOscillator.connect(scanGain);
             scanGain.connect(audioCtx.destination);
             scanOscillator.start();
@@ -161,33 +182,14 @@
 
         function stopScanAudio() {
             if (scanOscillator) {
-                scanOscillator.stop();
-                scanOscillator.disconnect();
+                try { scanOscillator.stop(); scanOscillator.disconnect(); } catch(e) {}
             }
-        }
-
-        // Suara Denting Sukses
-        function playSuccessBeep() {
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.connect(g);
-            g.connect(audioCtx.destination);
-            
-            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
-            
-            g.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.5);
         }
 
         function startScan(e) {
             e.preventDefault();
             initAudio();
             playScanAudio();
-            
             trigger.classList.add('active');
             if (navigator.vibrate) navigator.vibrate(200);
             
@@ -196,11 +198,7 @@
             statusText.innerText = 'MEMVERIFIKASI...';
             statusText.style.color = '#00fbff';
             
-            scanTimer = setTimeout(() => {
-                stopScanAudio();
-                playSuccessBeep();
-                transitionOut();
-            }, 2500);
+            scanTimer = setTimeout(showSuccess, 2500);
         }
 
         function cancelScan() {
@@ -208,30 +206,33 @@
             stopScanAudio();
             trigger.classList.remove('active');
             scanner.style.display = 'none';
-            scanner.style.animation = 'none';
             statusText.innerText = 'TEKAN DAN TAHAN\nPEMINDAI OTORITAS';
             statusText.style.color = 'white';
         }
 
-        function transitionOut() {
+        function showSuccess() {
+            stopScanAudio();
             mainContent.style.opacity = '0';
             mainContent.style.transform = 'scale(0.8)';
-            setTimeout(showSuccess, 600);
-        }
-
-        function showSuccess() {
-            successScreen.classList.add('show');
-            if (navigator.vibrate) navigator.vibrate([100, 50, 300]);
             
-            const videoId = 'dZYC1Dk8O88';
-            const player = document.getElementById('musicPlayer');
-            player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
+            setTimeout(() => {
+                successScreen.classList.add('show');
+                if (navigator.vibrate) navigator.vibrate([100, 50, 300]);
+                
+                // Gabungkan Musik Utama + Efek Applause (Tepuk Tangan)
+                const videoId = 'dZYC1Dk8O88';
+                // Kita gunakan playlist YouTube untuk memutar suara tepuk tangan lalu musiknya
+                // Atau cara termudah: memutar video yang sudah ada audionya
+                const player = document.getElementById('musicPlayer');
+                player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
+            }, 600);
         }
 
         trigger.addEventListener('mousedown', startScan);
         trigger.addEventListener('touchstart', startScan);
         window.addEventListener('mouseup', cancelScan);
         window.addEventListener('touchend', cancelScan);
+        window.oncontextmenu = (e) => e.preventDefault();
     </script>
 </body>
 </html>
