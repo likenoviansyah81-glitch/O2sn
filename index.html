@@ -3,114 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opening O2SN 2026 - Lubuklinggau Selatan I</title>
+    <title>Opening Ceremony O2SN Lubuklinggau Selatan I</title>
     <style>
-        body {
-            margin: 0;
-            /* Background mewah dengan gradasi dan bintang */
-            background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+        body { margin: 0; background: #000; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        canvas { display: block; }
+
+        #ui-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #00f2ff;
+            pointer-events: none;
+            width: 100%;
+        }
+
+        h1 { font-size: 3rem; letter-spacing: 5px; text-shadow: 0 0 20px #00f2ff; margin-bottom: 10px; }
+        p { font-size: 1.2rem; opacity: 0.8; }
+
+        .palm-guide {
+            width: 250px;
+            height: 250px;
+            border: 2px solid rgba(0, 242, 255, 0.3);
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            animation: pulse 2s infinite;
         }
 
-        /* Efek partikel halus pada background */
-        body::after {
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 242, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+        }
+
+        .instruction { color: #fff; font-weight: bold; text-transform: uppercase; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="ui-layer">
+        <p>OPENING CEREMONY</p>
+        <h1>O2SN 2026</h1>
+        <h3>KECAMATAN LUBUKLINGGAU SELATAN I</h3>
+        <div class="palm-guide">
+            <span style="font-size: 50px;">✋</span>
+        </div>
+        <p class="instruction">TEMPELKAN TELAPAK TANGAN UNTUK MEMBUKA ACARA</p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', init);
+        init();
+
+        class Particle {
+            constructor(x, y, color, speed) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = Math.random() * 3 + 1;
+                this.vx = (Math.random() - 0.5) * speed;
+                this.vy = (Math.random() - 0.5) * speed;
+                this.alpha = 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= 0.01;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createExplosion(x, y) {
+            const colors = ['#00f2ff', '#0072ff', '#ffffff', '#ffd700'];
+            for (let i = 0; i < 150; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, color, 15));
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) particles.splice(i, 1);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Interaksi Sentuh/Klik
+        window.addEventListener('mousedown', (e) => {
+            createExplosion(e.clientX, e.clientY);
             
-                   /* Elemen dekoratif tambahan untuk background */
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            /* --- gambar --- */
-            background-image: url('gambar.png'); 
-            /* ---------------------------------- */
-            opacity: 0.3;
-            pointer-events: none;
-        }
+            // Efek suara (opsional: buka komentar jika ada file audio)
+            // new Audio('impact.mp3').play(); 
+        });
 
-        #main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            z-index: 2;
-        }
+        window.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            createExplosion(touch.clientX, touch.clientY);
+        });
 
-        /* Logo di awal */
-        .initial-logo {
-            width: 100px;
-            height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
-        }
-
-        #status-text {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
-        }
-
-        .palm-container {
-            position: relative;
-            width: 260px;
-            height: 360px;
-            border: 2px solid rgba(0, 255, 255, 0.4);
-            border-radius: 45px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            overflow: hidden;
-        }
-
-        .palm-container.active {
-            transform: scale(1.08);
-            border-color: #00fbff;
-            box-shadow: 0 0 60px rgba(0, 251, 255, 0.4);
-        }
-
-        .palm-icon {
-            width: 100%; height: 100%;
-            fill: #00d4ff; opacity: 0.3;
-        }
-
-        .scanner-line {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 10px;
-            background: linear-gradient(to bottom, transparent, #00fbff);
-            box-shadow: 0 0 25px #00fbff;
-            display: none;
-        }
-
-        @keyframes scan {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        .success-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #004466 0%, #000 100%);
-            z-index: 10;
-            text-align: center;
-            padding-top: 5vh;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .success-overlay.show { display: block; opacity: 1; }
-
-        .featured-image {
+        animate();
+    </script>
+</body>
+</html>
             width: 250px;
             height: auto;
             margin: 20px auto;
