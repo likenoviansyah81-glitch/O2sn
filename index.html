@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opening O2SN 2026 - Lubuklinggau Selatan I</title>
     <style>
-        /* Gaya dasar tetap sama seperti sebelumnya */
+        /* Gaya dasar (tetap sama) */
         body {
             margin: 0;
             background: #001a33;
@@ -38,18 +38,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .palm-container:active {
-            transform: scale(0.98);
-            border-color: #00fbff;
-        }
-
-        .palm-icon {
-            width: 100%;
-            height: 100%;
-            fill: #00d4ff;
-            opacity: 0.4;
-        }
-
         .scanner-line {
             position: absolute;
             top: 0;
@@ -76,12 +64,17 @@
             background: radial-gradient(circle, #004466 0%, #000 100%);
             z-index: 10;
             text-align: center;
-            padding-top: 5%;
+            padding-top: 3%;
         }
 
-        .success-overlay h1 { font-size: 6rem; margin: 10px 0; color: white; }
-        .success-overlay h2 { font-size: 2.5rem; color: #00fbff; }
-        .success-overlay h3 { font-size: 2rem; color: #ffd700; margin-bottom: 0; }
+        .featured-image {
+            width: 250px;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            border: 3px solid #ffd700;
+        }
 
         .confetti {
             animation: zoomIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -98,7 +91,7 @@
     <h2 id="status-text">TEKAN DAN TAHAN<br>UNTUK MEMBUKA ACARA</h2>
 
     <div class="palm-container" id="palmTrigger">
-        <svg class="palm-icon" viewBox="0 0 24 24"><path d="M12,2A1,1 0 0,1 13,3V11.29L15.71,14.29L17.12,12.88L13,8.76V5H15V8.26L19.5,12.76L18.09,14.17L15,11.08V21H9V11.08L5.91,14.17L4.5,12.76L9,8.26V2H11V3A1,1 0 0,1 12,2M11,13V21H13V13H11Z" /></svg>
+        <svg style="width:100%;height:100%;fill:#00d4ff;opacity:0.4;" viewBox="0 0 24 24"><path d="M12,2A1,1 0 0,1 13,3V11.29L15.71,14.29L17.12,12.88L13,8.76V5H15V8.26L19.5,12.76L18.09,14.17L15,11.08V21H9V11.08L5.91,14.17L4.5,12.76L9,8.26V2H11V3A1,1 0 0,1 12,2M11,13V21H13V13H11Z" /></svg>
         <div class="scanner-line" id="scanner"></div>
     </div>
 
@@ -107,10 +100,114 @@
     <div class="success-overlay" id="successScreen">
         <div class="confetti">
             <h3>DENGAN RAHMAT TUHAN YME</h3>
-            <h1>O2SN 2026</h1>
-            <h2>LUBUKLINGGAU SELATAN I</h2>
-            <h1 style="color: #ffd700; font-size: 4rem;">RESMI DIBUKA</h1>
-            <p style="font-size: 1.5rem; margin-top: 30px;">"Sportivitas Adalah Jati Diri Kami"</p>
+            <h1 style="font-size: 5rem; margin: 10px 0;">O2SN 2026</h1>
+            <h2 style="color:#00fbff;">LUBUKLINGGAU SELATAN I</h2>
+            <img src="https://via.placeholder.com/250x250/001a33/ffd700?text=LOGO+O2SN" alt="Logo" class="featured-image">
+            <h1 style="color: #ffd700; font-size: 3.5rem;">RESMI DIBUKA</h1>
+        </div>
+    </div>
+
+    <script>
+        const trigger = document.getElementById('palmTrigger');
+        const scanner = document.getElementById('scanner');
+        const successScreen = document.getElementById('successScreen');
+        const statusText = document.getElementById('status-text');
+        
+        let scanTimer;
+        let audioCtx;
+        let oscillator;
+        let gainNode;
+
+        // Inisialisasi Audio Context (Web Audio API)
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Suara "Bip-Bip" Scanning
+        function playScanSound() {
+            initAudio();
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sawtooth'; // Suara robotik/elektronik
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 2.5);
+
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2.5);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+        }
+
+        function stopScanSound() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator.disconnect();
+            }
+        }
+
+        // Suara "Success" (Denting singkat)
+        function playSuccessSound() {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            osc.frequency.value = 880; // Nada A5
+            g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1);
+        }
+
+        function startScan(e) {
+            e.preventDefault();
+            initAudio();
+            playScanSound();
+            
+            scanner.style.display = 'block';
+            scanner.style.animation = 'scan 1.5s infinite linear';
+            statusText.innerText = 'MEMVERIFIKASI...';
+            statusText.style.color = '#00fbff';
+            
+            scanTimer = setTimeout(showSuccess, 2500);
+        }
+
+        function cancelScan() {
+            clearTimeout(scanTimer);
+            stopScanSound();
+            scanner.style.display = 'none';
+            scanner.style.animation = 'none';
+            statusText.innerText = 'TEKAN DAN TAHAN\nUNTUK MEMBUKA ACARA';
+            statusText.style.color = 'white';
+        }
+
+        function showSuccess() {
+            stopScanSound();
+            playSuccessSound();
+            successScreen.style.display = 'block';
+            
+            // Lagu Utama (YouTube)
+            const videoId = 'dZYC1Dk8O88';
+            const player = document.getElementById('musicPlayer');
+            player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
+        }
+
+        // Event Listeners
+        trigger.addEventListener('mousedown', startScan);
+        trigger.addEventListener('touchstart', startScan);
+        window.addEventListener('mouseup', cancelScan);
+        window.addEventListener('touchend', cancelScan);
+
+        // Mencegah menu konteks
+        window.oncontextmenu = (e) => { e.preventDefault(); return false; };
+    </script>
+</body>
+</html>
         </div>
     </div>
 
