@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opening O2SN 2026 - Lubuklinggau Selatan I</title>
     <style>
-        /* ... Gaya dasar sebelumnya tetap sama ... */
         body {
             margin: 0;
-            background: #001a33;
+            background: #000b1a;
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
@@ -19,107 +18,110 @@
             height: 100vh;
         }
 
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 2;
+        }
+
         #status-text {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-align: center;
+            transition: all 0.3s;
         }
 
         .palm-container {
             position: relative;
-            width: 280px;
-            height: 380px;
-            border: 3px solid rgba(0, 255, 255, 0.3);
-            border-radius: 40px;
+            width: 260px;
+            height: 360px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 45px;
             cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+        }
+
+        .palm-container.active {
+            transform: scale(1.08);
+            border-color: #00fbff;
+            box-shadow: 0 0 60px rgba(0, 251, 255, 0.4);
+            background: rgba(0, 251, 255, 0.08);
         }
 
         .palm-icon {
             width: 100%;
             height: 100%;
             fill: #00d4ff;
-            opacity: 0.4;
+            opacity: 0.3;
+            transition: opacity 0.3s;
         }
+
+        .palm-container.active .palm-icon { opacity: 0.8; }
 
         .scanner-line {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 8px;
-            background: #00fbff;
-            box-shadow: 0 0 20px #00fbff;
+            height: 10px;
+            background: linear-gradient(to bottom, transparent, #00fbff);
+            box-shadow: 0 0 25px #00fbff;
             display: none;
         }
 
         @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+            0% { top: -10%; }
+            100% { top: 110%; }
         }
 
         .success-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #004466 0%, #000 100%);
             z-index: 10;
             text-align: center;
-            padding-top: 3%;
+            padding-top: 5%;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        /* Gaya Khusus Gambar Akhir */
-        .featured-image {
-            width: 300px; /* Atur ukuran gambar di sini */
-            height: auto;
-            margin: 20px auto;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); /* Efek cahaya emas */
-            border: 3px solid #ffd700;
-            display: block;
-        }
-
-        .success-overlay h1 { font-size: 5rem; margin: 5px 0; color: white; }
-        .success-overlay h2 { font-size: 2rem; color: #00fbff; margin: 5px 0; }
-        .success-overlay h3 { font-size: 1.5rem; color: #ffd700; margin-bottom: 0; }
+        .success-overlay.show { display: block; opacity: 1; }
 
         .confetti {
-            animation: zoomIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: slideUp 1.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <h2 id="status-text">TEKAN DAN TAHAN<br>UNTUK MEMBUKA ACARA</h2>
-
-    <div class="palm-container" id="palmTrigger">
-        <svg class="palm-icon" viewBox="0 0 24 24"><path d="M12,2A1,1 0 0,1 13,3V11.29L15.71,14.29L17.12,12.88L13,8.76V5H15V8.26L19.5,12.76L18.09,14.17L15,11.08V21H9V11.08L5.91,14.17L4.5,12.76L9,8.26V2H11V3A1,1 0 0,1 12,2M11,13V21H13V13H11Z" /></svg>
-        <div class="scanner-line" id="scanner"></div>
+    <div id="main-content">
+        <h2 id="status-text">TEKAN DAN TAHAN<br>PEMINDAI OTORITAS</h2>
+        <div class="palm-container" id="palmTrigger">
+            <svg class="palm-icon" viewBox="0 0 24 24"><path d="M12,2A1,1 0 0,1 13,3V11.29L15.71,14.29L17.12,12.88L13,8.76V5H15V8.26L19.5,12.76L18.09,14.17L15,11.08V21H9V11.08L5.91,14.17L4.5,12.76L9,8.26V2H11V3A1,1 0 0,1 12,2M11,13V21H13V13H11Z" /></svg>
+            <div class="scanner-line" id="scanner"></div>
+        </div>
     </div>
 
     <div id="musicPlayer" style="display:none"></div>
 
     <div class="success-overlay" id="successScreen">
         <div class="confetti">
-            <h3>DENGAN RAHMAT TUHAN YME</h3>
-            <h1>O2SN 2026</h1>
-            <h2>LUBUKLINGGAU SELATAN I</h2>
-            
-            <img src="https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk" alt="Logo O2SN" class="featured-image">
-
-            <h1 style="color: #ffd700; font-size: 3.5rem;">RESMI DIBUKA</h1>
-            <p style="font-size: 1.2rem; margin-top: 10px;">"Sportivitas Adalah Jati Diri Kami"</p>
+            <h3 style="color: #ffd700; letter-spacing: 3px;">DENGAN RAHMAT TUHAN YME</h3>
+            <h1 style="font-size: 5rem; margin: 10px 0;">O2SN 2026</h1>
+            <h2 style="color: #00fbff; font-size: 2.2rem;">LUBUKLINGGAU SELATAN I</h2>
+            <h1 style="color: #ffd700; font-size: 4rem; margin-top: 20px;">RESMI DIBUKA</h1>
         </div>
     </div>
 
@@ -128,35 +130,99 @@
         const scanner = document.getElementById('scanner');
         const successScreen = document.getElementById('successScreen');
         const statusText = document.getElementById('status-text');
+        const mainContent = document.getElementById('main-content');
         
         let scanTimer;
+        let audioCtx;
+        let scanOscillator;
+        let scanGain;
 
-        // Mencegah menu konteks klik kanan di HP
-        window.oncontextmenu = function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
-        };
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        // Suara Scanning (Dengungan yang naik frekuensinya)
+        function playScanAudio() {
+            initAudio();
+            scanOscillator = audioCtx.createOscillator();
+            scanGain = audioCtx.createGain();
+            
+            scanOscillator.type = 'sawtooth';
+            scanOscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
+            scanOscillator.frequency.exponentialRampToValueAtTime(500, audioCtx.currentTime + 2.5);
+            
+            scanGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            scanGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 2.5);
+            
+            scanOscillator.connect(scanGain);
+            scanGain.connect(audioCtx.destination);
+            scanOscillator.start();
+        }
+
+        function stopScanAudio() {
+            if (scanOscillator) {
+                scanOscillator.stop();
+                scanOscillator.disconnect();
+            }
+        }
+
+        // Suara Denting Sukses
+        function playSuccessBeep() {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+            
+            g.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+        }
 
         function startScan(e) {
             e.preventDefault();
+            initAudio();
+            playScanAudio();
+            
+            trigger.classList.add('active');
+            if (navigator.vibrate) navigator.vibrate(200);
+            
             scanner.style.display = 'block';
-            scanner.style.animation = 'scan 1.5s infinite linear';
+            scanner.style.animation = 'scan 1s infinite linear';
             statusText.innerText = 'MEMVERIFIKASI...';
             statusText.style.color = '#00fbff';
-            scanTimer = setTimeout(showSuccess, 2500);
+            
+            scanTimer = setTimeout(() => {
+                stopScanAudio();
+                playSuccessBeep();
+                transitionOut();
+            }, 2500);
         }
 
         function cancelScan() {
             clearTimeout(scanTimer);
+            stopScanAudio();
+            trigger.classList.remove('active');
             scanner.style.display = 'none';
             scanner.style.animation = 'none';
-            statusText.innerText = 'TEKAN DAN TAHAN\nUNTUK MEMBUKA ACARA';
+            statusText.innerText = 'TEKAN DAN TAHAN\nPEMINDAI OTORITAS';
             statusText.style.color = 'white';
         }
 
+        function transitionOut() {
+            mainContent.style.opacity = '0';
+            mainContent.style.transform = 'scale(0.8)';
+            setTimeout(showSuccess, 600);
+        }
+
         function showSuccess() {
-            successScreen.style.display = 'block';
+            successScreen.classList.add('show');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 300]);
+            
             const videoId = 'dZYC1Dk8O88';
             const player = document.getElementById('musicPlayer');
             player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
