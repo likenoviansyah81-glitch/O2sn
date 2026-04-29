@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opening O2SN 2026 - Lubuklinggau Selatan I</title>
     <style>
-        /*.Gaya dasar (tetap sama) */
-        body {
-               <style>
         body {
             margin: 0;
-            /* Kombinasi tekstur karbon dan gradasi radial */
+            /* Latar belakang gradasi mewah */
             background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
             color: white;
             font-family: 'Arial', sans-serif;
@@ -20,16 +17,18 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            position: relative;
         }
 
-        /* Elemen dekoratif tambahan untuk background */
+        /* Efek Stardust/Bintang pada Background */
         body::after {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Efek bintang/partikel */
+            background-image: url('https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk');
             opacity: 0.3;
             pointer-events: none;
+            z-index: 0;
         }
 
         #status-text {
@@ -52,82 +51,8 @@
             transition: all 0.3s;
             background: rgba(0, 26, 51, 0.6);
             backdrop-filter: blur(5px);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
             z-index: 1;
-        }
-        
-        /* ... sisa CSS lainnya (scanner-line, success-overlay, dll) tetap sama ... */
-    </style>
-    <style>
-        body {
-            margin: 0;
-            /* Kombinasi tekstur karbon dan gradasi radial */
-            background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        
-        /* Elemen dekoratif tambahan untuk background */
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk'); /* Efek bintang/partikel */
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        #status-text {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
-            z-index: 1;
-     
-        .palm-container {
-            position: relative;
-            width: 280px;
-            height: 380px;
-            border: 2px solid rgba(0, 255, 255, 0.5);
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(0, 26, 51, 0.6);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-        
-        /* ... sisa CSS lainnya (scanner-line, success-overlay, dll) tetap sama ... */
-    </style>
-
-        }
-
-        #status-text {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-        }
-
-        .palm-container {
-            position: relative;
-            width: 280px;
-            height: 380px;
-            border: 3px solid rgba(0, 255, 255, 0.3);
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .scanner-line {
@@ -156,16 +81,17 @@
             background: radial-gradient(circle, #004466 0%, #000 100%);
             z-index: 10;
             text-align: center;
-            padding-top: 3%;
+            padding-top: 5vh;
         }
 
         .featured-image {
-            width: 250px;
+            width: 220px;
             height: auto;
-            margin: 20px auto;
+            margin: 15px auto;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
             border: 3px solid #ffd700;
+            display: block;
         }
 
         .confetti {
@@ -192,13 +118,14 @@
     <div class="success-overlay" id="successScreen">
         <div class="confetti">
             <h3>DENGAN RAHMAT TUHAN YME</h3>
-            <h1 style="font-size: 5rem; margin: 10px 0;">O2SN 2026</h1>
-            <h2 style="color:#00fbff;">LUBUKLINGGAU SELATAN I</h2>
-            <img src="https://via.placeholder.com/250x250/001a33/ffd700?text=LOGO+O2SN" alt="Logo" class="featured-image">
-            <h1 style="color: #ffd700; font-size: 3.5rem;">RESMI DIBUKA</h1>
+            <h1 style="font-size: 4rem; margin: 10px 0;">O2SN 2026</h1>
+            <h2 style="color:#00fbff; font-size: 1.8rem;">LUBUKLINGGAU SELATAN I</h2>
+            
+            <img src="logo.png" alt="Logo O2SN" class="featured-image">
+            
+            <h1 style="color: #ffd700; font-size: 3.2rem; margin-top: 10px;">RESMI DIBUKA</h1>
         </div>
     </div>
-<img src="logo.png" alt="Logo O2SN" class="featured-image">
 
     <script>
         const trigger = document.getElementById('palmTrigger');
@@ -211,50 +138,30 @@
         let oscillator;
         let gainNode;
 
-        // Inisialisasi Audio Context (Web Audio API)
+        // Inisialisasi Suara
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
 
-        // Suara "Bip-Bip" Scanning
         function playScanSound() {
             initAudio();
             oscillator = audioCtx.createOscillator();
             gainNode = audioCtx.createGain();
-
-            oscillator.type = 'sawtooth'; // Suara robotik/elektronik
+            oscillator.type = 'sawtooth';
             oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 2.5);
-
-            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2.5);
-
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-
             oscillator.start();
         }
 
         function stopScanSound() {
             if (oscillator) {
-                oscillator.stop();
-                oscillator.disconnect();
+                try { oscillator.stop(); oscillator.disconnect(); } catch(e) {}
             }
-        }
-
-        // Suara "Success" (Denting singkat)
-        function playSuccessSound() {
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.connect(g);
-            g.connect(audioCtx.destination);
-            osc.frequency.value = 880; // Nada A5
-            g.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1);
         }
 
         function startScan(e) {
@@ -281,170 +188,22 @@
 
         function showSuccess() {
             stopScanSound();
-            playSuccessSound();
             successScreen.style.display = 'block';
             
-            // Lagu Utama (YouTube)
+            // Putar musik YouTube (Tararara)
             const videoId = 'dZYC1Dk8O88';
             const player = document.getElementById('musicPlayer');
             player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
         }
 
-        // Event Listeners
+        // Event Listeners untuk Mouse dan Touch Screen
         trigger.addEventListener('mousedown', startScan);
         trigger.addEventListener('touchstart', startScan);
         window.addEventListener('mouseup', cancelScan);
         window.addEventListener('touchend', cancelScan);
 
-        // Mencegah menu konteks
+        // Blokir Klik Kanan
         window.oncontextmenu = (e) => { e.preventDefault(); return false; };
-    </script>
-</body>
-</html>
-        const statusText = document.getElementById('status-text');
-        
-        let scanTimer;
-        let audioCtx;
-        let oscillator;
-        let gainNode;
-
-        // Inisialisasi Audio Context (Web Audio API)
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        // Suara "Bip-Bip" Scanning
-        function playScanSound() {
-            initAudio();
-            oscillator = audioCtx.createOscillator();
-            gainNode = audioCtx.createGain();
-
-            oscillator.type = 'sawtooth'; // Suara robotik/elektronik
-            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 2.5);
-
-            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2.5);
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            oscillator.start();
-        }
-
-        function stopScanSound() {
-            if (oscillator) {
-                oscillator.stop();
-                oscillator.disconnect();
-            }
-        }
-
-        // Suara "Success" (Denting singkat)
-        function playSuccessSound() {
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.connect(g);
-            g.connect(audioCtx.destination);
-            osc.frequency.value = 880; // Nada A5
-            g.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1);
-        }
-
-        function startScan(e) {
-            e.preventDefault();
-            initAudio();
-            playScanSound();
-            
-            scanner.style.display = 'block';
-            scanner.style.animation = 'scan 1.5s infinite linear';
-            statusText.innerText = 'MEMVERIFIKASI...';
-            statusText.style.color = '#00fbff';
-            
-            scanTimer = setTimeout(showSuccess, 2500);
-        }
-
-        function cancelScan() {
-            clearTimeout(scanTimer);
-            stopScanSound();
-            scanner.style.display = 'none';
-            scanner.style.animation = 'none';
-            statusText.innerText = 'TEKAN DAN TAHAN\nUNTUK MEMBUKA ACARA';
-            statusText.style.color = 'white';
-        }
-
-        function showSuccess() {
-            stopScanSound();
-            playSuccessSound();
-            successScreen.style.display = 'block';
-            
-            // Lagu Utama (YouTube)
-            const videoId = 'dZYC1Dk8O88';
-            const player = document.getElementById('musicPlayer');
-            player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
-        }
-
-        // Event Listeners
-        trigger.addEventListener('mousedown', startScan);
-        trigger.addEventListener('touchstart', startScan);
-        window.addEventListener('mouseup', cancelScan);
-        window.addEventListener('touchend', cancelScan);
-
-        // Mencegah menu konteks
-        window.oncontextmenu = (e) => { e.preventDefault(); return false; };
-    </script>
-</body>
-</html>
-        </div>
-    </div>
-
-    <script>
-        const trigger = document.getElementById('palmTrigger');
-        const scanner = document.getElementById('scanner');
-        const successScreen = document.getElementById('successScreen');
-        const statusText = document.getElementById('status-text');
-        
-        let scanTimer;
-
-        // Fungsi Memulai Scan
-        function startScan(e) {
-            e.preventDefault();
-            scanner.style.display = 'block';
-            scanner.style.animation = 'scan 1.5s infinite linear';
-            statusText.innerText = 'MEMVERIFIKASI...';
-            statusText.style.color = '#00fbff';
-            
-            // Scan selama 2.5 detik sebelum terbuka
-            scanTimer = setTimeout(showSuccess, 2500);
-        }
-
-        // Fungsi Membatalkan jika tangan dilepas
-        function cancelScan() {
-            clearTimeout(scanTimer);
-            scanner.style.display = 'none';
-            scanner.style.animation = 'none';
-            statusText.innerText = 'TEKAN DAN TAHAN\nUNTUK MEMBUKA ACARA';
-            statusText.style.color = 'white';
-        }
-
-        function showSuccess() {
-            successScreen.style.display = 'block';
-            
-            // Memutar Lagu Tararara (Zhao Lei - Trumpet)
-            // Menggunakan YouTube Embed Autoplay
-            const videoId = 'dZYC1Dk8O88';
-            const player = document.getElementById('musicPlayer');
-            player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
-        }
-
-        // Event Listeners
-        trigger.addEventListener('mousedown', startScan);
-        trigger.addEventListener('touchstart', startScan);
-        window.addEventListener('mouseup', cancelScan);
-        window.addEventListener('touchend', cancelScan);
     </script>
 </body>
 </html>
