@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            /* Latar belakang gradasi mewah */
+            /* Background Awal: Gradasi Biru Gelap Tekstur */
             background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
             color: white;
             font-family: 'Arial', sans-serif;
@@ -17,41 +17,36 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            position: relative;
         }
 
-        /* Efek Stardust/Bintang pada Background */
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk');
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 0;
+        /* Logo di Awal Verifikasi */
+        .initial-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+            z-index: 1;
         }
 
         #status-text {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 3px;
             text-align: center;
-            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
             z-index: 1;
         }
 
         .palm-container {
             position: relative;
-            width: 280px;
-            height: 380px;
-            border: 2px solid rgba(0, 255, 255, 0.5);
+            width: 260px;
+            height: 350px;
+            border: 2px solid rgba(0, 255, 255, 0.4);
             border-radius: 40px;
             cursor: pointer;
             transition: all 0.3s;
-            background: rgba(0, 26, 51, 0.6);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(5px);
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
@@ -71,6 +66,7 @@
             100% { top: 100%; }
         }
 
+        /* Layar Sukses dengan Background Gambar */
         .success-overlay {
             display: none;
             position: fixed;
@@ -78,7 +74,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, #004466 0%, #000 100%);
+            /* GANTI URL DI BAWAH UNTUK BACKGROUND SUKSES */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk'); 
+            background-size: cover;
+            background-position: center;
             z-index: 10;
             text-align: center;
             padding-top: 5vh;
@@ -89,9 +89,8 @@
             height: auto;
             margin: 15px auto;
             border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
             border: 3px solid #ffd700;
-            display: block;
         }
 
         .confetti {
@@ -102,9 +101,13 @@
             from { transform: scale(0.5); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
+        h1 { text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
     </style>
 </head>
 <body>
+
+    <img src="logo.png" alt="Logo" class="initial-logo">
 
     <h2 id="status-text">TEKAN DAN TAHAN<br>UNTUK MEMBUKA ACARA</h2>
 
@@ -117,13 +120,14 @@
 
     <div class="success-overlay" id="successScreen">
         <div class="confetti">
-            <h3>DENGAN RAHMAT TUHAN YME</h3>
-            <h1 style="font-size: 4rem; margin: 10px 0;">O2SN 2026</h1>
-            <h2 style="color:#00fbff; font-size: 1.8rem;">LUBUKLINGGAU SELATAN I</h2>
+            <h3 style="color: #ffd700; letter-spacing: 2px;">DENGAN RAHMAT TUHAN YME</h3>
+            <h1 style="font-size: 4.5rem; margin: 10px 0;">O2SN 2026</h1>
+            <h2 style="color:#00fbff; font-size: 2rem;">LUBUKLINGGAU SELATAN I</h2>
             
-            <img src="logo.png" alt="Logo O2SN" class="featured-image">
+            <img src="logo.png" alt="Logo Utama" class="featured-image">
             
-            <h1 style="color: #ffd700; font-size: 3.2rem; margin-top: 10px;">RESMI DIBUKA</h1>
+            <h1 style="color: #ffd700; font-size: 3.5rem; margin-top: 10px;">RESMI DIBUKA</h1>
+            <p style="font-size: 1.2rem;">"Junjung Tinggi Sportivitas"</p>
         </div>
     </div>
 
@@ -138,7 +142,6 @@
         let oscillator;
         let gainNode;
 
-        // Inisialisasi Suara
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -149,7 +152,7 @@
             initAudio();
             oscillator = audioCtx.createOscillator();
             gainNode = audioCtx.createGain();
-            oscillator.type = 'sawtooth';
+            oscillator.type = 'sawtooth'; 
             oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 2.5);
             gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
@@ -164,16 +167,26 @@
             }
         }
 
+        function playSuccessSound() {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            osc.frequency.value = 880; 
+            g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1);
+        }
+
         function startScan(e) {
             e.preventDefault();
             initAudio();
             playScanSound();
-            
             scanner.style.display = 'block';
             scanner.style.animation = 'scan 1.5s infinite linear';
-            statusText.innerText = 'MEMVERIFIKASI...';
+            statusText.innerText = 'MEMVERIFIKASI OTORITAS...';
             statusText.style.color = '#00fbff';
-            
             scanTimer = setTimeout(showSuccess, 2500);
         }
 
@@ -188,21 +201,17 @@
 
         function showSuccess() {
             stopScanSound();
+            playSuccessSound();
             successScreen.style.display = 'block';
-            
-            // Putar musik YouTube (Tararara)
             const videoId = 'dZYC1Dk8O88';
             const player = document.getElementById('musicPlayer');
             player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
         }
 
-        // Event Listeners untuk Mouse dan Touch Screen
         trigger.addEventListener('mousedown', startScan);
         trigger.addEventListener('touchstart', startScan);
         window.addEventListener('mouseup', cancelScan);
         window.addEventListener('touchend', cancelScan);
-
-        // Blokir Klik Kanan
         window.oncontextmenu = (e) => { e.preventDefault(); return false; };
     </script>
 </body>
