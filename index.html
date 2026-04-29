@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opening O2SN 2026 - Lubuklinggau Selatan I</title>
     <style>
-        /*.featured-image {
-    width: 300px; /* Sesuaikan ukuran gambar */
-    height: auto; /* Mempertahankan rasio aspek gambar */
-    margin: 20px auto; /* Memberikan jarak atas/bawah dan memposisikan di tengah */
-    border-radius: 15px; /* Memberikan sudut tumpul pada gambar */
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); /* Efek cahaya emas di sekitar gambar */
-    border: 3px solid #ffd700; /* Bingkai tipis berwarna emas */
-    display: block; /* Memastikan gambar berada pada baris sendiri */
-}
- Gaya dasar (tetap sama) */
+        /*.Gaya dasar (tetap sama) */
+        body {
+               <style>
         body {
             margin: 0;
-            background: #001a33;
+            /* Kombinasi tekstur karbon dan gradasi radial */
+            background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
@@ -26,6 +20,95 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+        }
+
+        /* Elemen dekoratif tambahan untuk background */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Efek bintang/partikel */
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        #status-text {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
+            z-index: 1;
+        }
+
+        .palm-container {
+            position: relative;
+            width: 280px;
+            height: 380px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(0, 26, 51, 0.6);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        /* ... sisa CSS lainnya (scanner-line, success-overlay, dll) tetap sama ... */
+    </style>
+    <style>
+        body {
+            margin: 0;
+            /* Kombinasi tekstur karbon dan gradasi radial */
+            background: radial-gradient(circle at center, #003366 0%, #000b1a 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        /* Elemen dekoratif tambahan untuk background */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://drive.google.com/file/d/1U0Twulu8IVBzlTOQehh2W9qk6C0cT2d7/view?usp=drivesdk'); /* Efek bintang/partikel */
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        #status-text {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 251, 255, 0.5);
+            z-index: 1;
+     
+        .palm-container {
+            position: relative;
+            width: 280px;
+            height: 380px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(0, 26, 51, 0.6);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        /* ... sisa CSS lainnya (scanner-line, success-overlay, dll) tetap sama ... */
+    </style>
+
         }
 
         #status-text {
