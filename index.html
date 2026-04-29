@@ -208,6 +208,103 @@
     </script>
 </body>
 </html>
+        const statusText = document.getElementById('status-text');
+        
+        let scanTimer;
+        let audioCtx;
+        let oscillator;
+        let gainNode;
+
+        // Inisialisasi Audio Context (Web Audio API)
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Suara "Bip-Bip" Scanning
+        function playScanSound() {
+            initAudio();
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sawtooth'; // Suara robotik/elektronik
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 2.5);
+
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2.5);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+        }
+
+        function stopScanSound() {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator.disconnect();
+            }
+        }
+
+        // Suara "Success" (Denting singkat)
+        function playSuccessSound() {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            osc.frequency.value = 880; // Nada A5
+            g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1);
+        }
+
+        function startScan(e) {
+            e.preventDefault();
+            initAudio();
+            playScanSound();
+            
+            scanner.style.display = 'block';
+            scanner.style.animation = 'scan 1.5s infinite linear';
+            statusText.innerText = 'MEMVERIFIKASI...';
+            statusText.style.color = '#00fbff';
+            
+            scanTimer = setTimeout(showSuccess, 2500);
+        }
+
+        function cancelScan() {
+            clearTimeout(scanTimer);
+            stopScanSound();
+            scanner.style.display = 'none';
+            scanner.style.animation = 'none';
+            statusText.innerText = 'TEKAN DAN TAHAN\nUNTUK MEMBUKA ACARA';
+            statusText.style.color = 'white';
+        }
+
+        function showSuccess() {
+            stopScanSound();
+            playSuccessSound();
+            successScreen.style.display = 'block';
+            
+            // Lagu Utama (YouTube)
+            const videoId = 'dZYC1Dk8O88';
+            const player = document.getElementById('musicPlayer');
+            player.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
+        }
+
+        // Event Listeners
+        trigger.addEventListener('mousedown', startScan);
+        trigger.addEventListener('touchstart', startScan);
+        window.addEventListener('mouseup', cancelScan);
+        window.addEventListener('touchend', cancelScan);
+
+        // Mencegah menu konteks
+        window.oncontextmenu = (e) => { e.preventDefault(); return false; };
+    </script>
+</body>
+</html>
         </div>
     </div>
 
